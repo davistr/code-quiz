@@ -9,7 +9,7 @@
 * JavaScript
 
 ## Screenshot
-![](images/site_screenshot.JPG)
+![image](images/site_screenshot.JPG)
 
 
 ## Website
