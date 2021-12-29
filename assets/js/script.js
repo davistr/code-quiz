@@ -294,10 +294,14 @@ var q5 = function () {
     };
 }
 
+
 var quizEnd = function () {
+
+    timerEl.textContent = 0;
     // create input field for user initials
-    var scoreInput = document.createElement("input");
-    scoreInput.setAttribute("type", "text");
+    var playerInitial = document.createElement("input");
+    playerInitial.setAttribute("type", "text");
+    playerInitial.id = "initials";
     // create button to submit score
     var scoreBtn = document.createElement("button");
     scoreBtn.textContent = "Submit";
@@ -307,10 +311,16 @@ var quizEnd = function () {
 
     answerText.innerHTML = "Please enter your initials: ";
     //answerText.appendChild(scoreDiv);
-    answerText.appendChild(scoreInput);
+    answerText.appendChild(playerInitial);
     answerText.appendChild(scoreBtn);
 
+    scoreBtn.onclick = function () {
+        saveHighScore(playerInitial.value, playerScore);
+        showScores();
+    };
+
 }
+
 
 var setTimer = function () {
     time = setInterval(function () {
@@ -332,5 +342,41 @@ var reduceTime = function () {
         timeRemaining -= 10;
     }
 };
+
+var saveHighScore = function (playerInitial, playerScore) {
+
+    var playerInfo = JSON.parse(localStorage.getItem("highScores")) || [];
+    var initials = playerInitial;
+    playerInfo.push(initials, playerScore);
+    console.log(playerInfo);
+}
+
+var showScores = function () {
+    questionText.innerHTML = "High Scores";
+    answerText.innerHTML = "";
+    var scoreArea = document.createElement("textarea");
+    scoreArea.setAttribute("style", "display:block;");
+    answerText.appendChild(scoreArea);
+
+    var retakeBtn = document.createElement("button");
+    retakeBtn.textContent = "Retake Quiz";
+    retakeBtn.className = "answer-btn";
+    retakeBtn.setAttribute("style", "display:inline;");
+
+    answerText.appendChild(retakeBtn);
+
+    var clearScoresBtn = document.createElement("button");
+    clearScoresBtn.textContent = "Clear High Scores";
+    clearScoresBtn.className = "answer-btn";
+    clearScoresBtn.setAttribute("style", "display:inline;");
+    answerText.appendChild(clearScoresBtn);
+
+    retakeBtn.onclick = function () {
+        questionText.innerHTML = "";
+        answerText.innerHTML = "";
+        startQuiz();
+    }
+}
+
 
 
