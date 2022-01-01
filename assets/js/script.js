@@ -77,11 +77,11 @@ var questions = [
 // run start quiz function on start button click
 startQuizBtn.onclick = function () {
     startQuiz();
-    setTimer();
 };
 
 var startQuiz = function () {
 
+    setTimer();
     // hide start quiz button
     startQuizBtn.style.display = "none";
 
@@ -297,7 +297,7 @@ var q5 = function () {
 
 var quizEnd = function () {
 
-    timerEl.textContent = 0;
+    timerEl.textContent = "Time Left: 0";
     // create input field for user initials
     var playerInitial = document.createElement("input");
     playerInitial.setAttribute("type", "text");
@@ -321,12 +321,14 @@ var quizEnd = function () {
 
 }
 
-
 var setTimer = function () {
     time = setInterval(function () {
         if (timeRemaining > 1) {
-            timerEl.textContent = "Time: " + timeRemaining;
+            timerEl.textContent = "Time Left: " + timeRemaining;
             timeRemaining--;
+        }
+        else if (quizEnd()) {
+            timerEl.textContent = 0;
         }
         else {
             timerEl.textContent = 0;
